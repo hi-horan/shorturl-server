@@ -1,0 +1,24 @@
+server:
+  http:
+    addr: 0.0.0.0:8000
+    timeout: 1s
+
+  cache_short_url_time: 86400s # 1 day
+  cache_invalid_short_url_time: 3600s # 1 hour 防止缓存击穿
+  cache_original_url_time: 86400s # 1 day
+
+data:
+  database:
+    source: root:@tcp(127.0.0.1:3306)/short_url?charset=utf8mb4&parseTime=True&loc=Local
+  redis:
+    addr: 127.0.0.1:6379
+    read_timeout: 0.2s
+    write_timeout: 0.2s
+
+jaeger:
+  url: http://127.0.0.1:14268/api/traces
+
+kgs:
+  address: 127.0.0.1:9000
+
+env: dev

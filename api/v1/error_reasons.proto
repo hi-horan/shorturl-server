@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package v1;
+
+option go_package = "shorturl-server/api/v1;v1";
+option java_multiple_files = true;
+option java_package = "shorturl.v1";
+option objc_class_prefix = "APIShortUrlV1";
+
+enum ErrorReason {
+  GREETER_UNSPECIFIED = 0;
+  HAVE_NO_KEYS = 20000;
+  MUST_HAVE_ORIGINAL_URL = 20001;
+  INTERNAL_ERROR = 20002;
+}

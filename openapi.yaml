@@ -1,0 +1,87 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: ShortUrl API
+    version: 0.0.1
+paths:
+    /v1/short_urls:
+        get:
+            tags:
+                - ShortUrl
+            operationId: ShortUrl_GetOriginalUrl
+            parameters:
+                - name: shortKey
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/v1.GetOriginalReply'
+        post:
+            tags:
+                - ShortUrl
+            operationId: ShortUrl_CreateShortUrl
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/v1.CreateShortUrlRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/v1.CreateShortUrlReply'
+    /{shortKey}:
+        get:
+            tags:
+                - ShortUrl
+            operationId: ShortUrl_Redirect
+            parameters:
+                - name: shortKey
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/v1.RedirectReply'
+components:
+    schemas:
+        v1.CreateShortUrlReply:
+            type: object
+            properties:
+                shortKey:
+                    type: string
+        v1.CreateShortUrlRequest:
+            type: object
+            properties:
+                originalUrl:
+                    type: string
+                ttlSeconds:
+                    type: integer
+                    format: int64
+        v1.GetOriginalReply:
+            type: object
+            properties:
+                originalUrl:
+                    type: string
+        v1.RedirectReply:
+            type: object
+            properties:
+                originalUrl:
+                    type: string
+tags:
+    - name: ShortUrl

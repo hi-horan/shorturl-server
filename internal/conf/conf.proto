@@ -1,0 +1,55 @@
+syntax = "proto3";
+package kratos.api;
+
+option go_package = "shorturl-server/internal/conf;conf";
+
+import "google/protobuf/duration.proto";
+
+message Bootstrap {
+  Server server = 1;
+  Data data = 2;
+  KGS kgs = 3;
+  Jaeger jaeger = 4;
+  string env = 5;
+}
+
+message Jaeger {
+    string url = 1;
+}
+
+message Server {
+  message HTTP {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3;
+  }
+  message GRPC {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3;
+  }
+  HTTP http = 1;
+  GRPC grpc = 2;
+
+  google.protobuf.Duration cache_short_url_time = 3;
+  google.protobuf.Duration cache_invalid_short_url_time = 4;
+  google.protobuf.Duration cache_original_url_time = 5;
+}
+
+message KGS {
+    string address = 1;
+}
+
+message Data {
+  message Database {
+    string source = 2;
+  }
+  message Redis {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration read_timeout = 3;
+    google.protobuf.Duration write_timeout = 4;
+  }
+  Database database = 1;
+  Redis redis = 2;
+}
